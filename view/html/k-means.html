@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Means</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <!-- Resources -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    
+
+</head>
+<body>
+    <div class="menu__wrapper">
+        <div class="menu__bar">
+            <a href="#" title="Logo" class="t">
+                <img class="logo" src=""> AFRODITA
+            </a>
+            <img class="menu-icon" src="../assets/burger-menu.svg" title='Burger Menu' alt='Burger Menu' onclick="toggleMenu(this)">
+            <ul class="navigation">
+                <li>
+                    <a href="#" title="">Inventario</a>
+                </li>
+                <li>
+                    <a href="#" title="">Series de tiempo</a>
+                </li>
+                <li>
+                    <a href="#" title="">K-MEANS</a>
+                </li>
+                <li>
+                    <a href="#" title="">Sesion</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="grafico">
+        <div class="selects">
+            <div class="options">
+                <div class="nameClus">Clusters:</div>
+                <select name="select" id="select" class="clusters">
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            
+            <div class="options">
+                <div class="nameClus">Grafico: </div>
+                <select name="select" id="tipo" class="clusters">
+                    <option>Compra</option>
+                    <option>Precio</option>
+                </select>
+            </div>
+
+        </div>
+        <div id="chartdiv"></div>
+    </div>
+
+    <section class="listProduct" id = "listProduct"></section>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/grafico.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</body>
+</html>
