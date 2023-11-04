@@ -82,10 +82,30 @@ const deleteProduct = async(req,res)=>{
     };
 };
 
+const existencia = async (req, res) => {
+    const id = req.params.id;
+    const {existencia} = req.body;
+    try{
+        await pool.getConnection();
+        prod = await pool.query('UPDATE producto SET existencia = ? where id_producto = ?',
+        [
+            existencia,
+            id
+        ]
+        );
+        res.json(true);
+    }catch(error){
+        res.send(error);
+    };
+};
+
+
 module.exports = {
     listProduct, 
     idProduct, 
     newProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    existencia,
+    existencia
 };
