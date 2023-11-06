@@ -1,15 +1,15 @@
 const { pool } = require('../db/db');
 
 const newProvider = async (req, res) => {
-    const { nombre, empresa, contacto} = req.body;
+    const { name, enterprise, contact} = req.body;
     prov = {};
     try{
         await pool.getConnection();
-        prov = await pool.query('INSERT INTO proveedor VALUES (null, ?, ?, ?) RETURNING *', 
+        prov = await pool.query('INSERT INTO provider VALUES (null, ?, ?, ?) RETURNING *', 
         [
-            nombre, 
-            empresa,
-            contacto
+            name, 
+            enterprise,
+            contact
         ]
         );
         res.json(prov);
@@ -22,7 +22,7 @@ const listProvider = async (req,res)=>{
     prov = {};
     try{
         await pool.getConnection();
-        prov = await pool.query('SELECT * from proveedor');
+        prov = await pool.query('SELECT * from provider');
         res.json(prov);
     }catch(error){
         res.send(error);
