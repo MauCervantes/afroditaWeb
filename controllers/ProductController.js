@@ -5,7 +5,7 @@ const listProduct = async (req,res)=>{
     prod = {};
     try{
         await pool.getConnection();
-        prod = await pool.query('SELECT * from producto');
+        prod = await pool.query('SELECT * from product');
         res.json(prod);
     }catch(error){
         res.send(error);
@@ -17,7 +17,7 @@ const idProduct = async (req,res)=>{
     prod = {};
     try{
         await pool.getConnection();
-        prod = await pool.query('SELECT * from producto where id_producto = ' + id);
+        prod = await pool.query('SELECT * from product where id_product = ' + id);
         res.json(prod);
     }catch(error){
         res.send(error);
@@ -25,18 +25,18 @@ const idProduct = async (req,res)=>{
 };
 
 const newProduct = async (req,res)=>{
-    const { id_proveedor, nombre, precio, descripcion, uso, tipo, existencia } = req.body;
+    const { id_provider, name, price, description, uses, types, existence } = req.body;
     prod = {};
     try{
         await pool.getConnection();
-        prod = await pool.query('INSERT INTO producto VALUES (null, ?, ?, ?, ?, ?, ?, ?) RETURNING *', [
-            id_proveedor, 
-            nombre, 
-            precio, 
-            descripcion, 
-            uso, 
-            tipo, 
-            existencia]
+        prod = await pool.query('INSERT INTO product VALUES (null, ?, ?, ?, ?, ?, ?, ?) RETURNING *', [
+            id_provider, 
+            name, 
+            price, 
+            description, 
+            uses, 
+            types, 
+            existence]
         );
         res.json(prod);
     }catch(error){
@@ -46,18 +46,18 @@ const newProduct = async (req,res)=>{
 
 const updateProduct = async (req,res)=>{
     const id = req.params.id;
-    const {id_proveedor, nombre, precio, descripcion, uso, tipo, existencia } = req.body;
+    const {id_provider, name, price, description, uses, types, existence } = req.body;
     try{
         await pool.getConnection();
-        await pool.query('UPDATE producto SET id_proveedor = ?, nombre = ?, precio = ?, descripcion = ?, uso = ?, tipo = ?, existencia = ? WHERE id_producto = ?',
+        await pool.query('UPDATE product SET id_provider = ?, name = ?, price = ?, description = ?, uses = ?, types = ?, existence = ? WHERE id_product = ?',
         [
-            id_proveedor, 
-            nombre, 
-            precio, 
-            descripcion, 
-            uso, 
-            tipo, 
-            existencia,
+            id_provider, 
+            name, 
+            price, 
+            description, 
+            uses, 
+            types, 
+            existence,
             id
         ]
         );
@@ -72,7 +72,7 @@ const deleteProduct = async(req,res)=>{
     const id = req.params.id;
     try{
         await pool.getConnection();
-        await pool.query('DELETE FROM producto WHERE id_producto = ?',
+        await pool.query('DELETE FROM product WHERE id_product = ?',
         [
             id
         ]);
@@ -82,14 +82,14 @@ const deleteProduct = async(req,res)=>{
     };
 };
 
-const existencia = async (req, res) => {
+const existence = async (req, res) => {
     const id = req.params.id;
-    const {existencia} = req.body;
+    const {existence} = req.body;
     try{
         await pool.getConnection();
-        prod = await pool.query('UPDATE producto SET existencia = ? where id_producto = ?',
+        prod = await pool.query('UPDATE product SET existence = ? where id_product = ?',
         [
-            existencia,
+            existence,
             id
         ]
         );
@@ -106,6 +106,6 @@ module.exports = {
     newProduct,
     updateProduct,
     deleteProduct,
-    existencia,
-    existencia
+    existence,
+    existence
 };
