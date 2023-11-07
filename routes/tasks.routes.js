@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const router = Router();
 const { km, kmp } = require('../controllers/dataset');
-const { listProduct, idProduct, newProduct, updateProduct, deleteProduct, existencia } = require('../controllers/ProductController'); 
+const { listProduct, idProduct, newProduct, updateProduct, deleteProduct, existence } = require('../controllers/ProductController'); 
 const { newProvider, listProvider, idProvider, updateProvider, deleteProvider } = require('../controllers/ProviderController'); 
-const { updateEmploye, newEmploye } = require('../controllers/EmployeController'); 
+const { newEmploye, updateEmploye, listEmploye, idEmploye, deleteEmploye } = require('../controllers/EmployeController'); 
+const { newClient, listClient, idClient, deleteClient, updateClient} = require('../controllers/ClientController'); 
 
 //*Esta no debe de existir. Solo es para pruebas
 const { pool } = require('../db/db');
@@ -38,7 +39,7 @@ router.delete('/product/:id', deleteProduct);
 
 //Update existencia Product
 //http://localhost:3000/productExis/ID
-router.put('/productExis/:id', existencia);
+router.put('/productExis/:id', existence);
 
 
 //------------------------------------------------------//
@@ -58,7 +59,7 @@ router.get('/provider/:id', idProvider);
 router.put('/provider/:id', updateProvider);
 
 //delete provider
-router.delete('/provider/:id', deleteProvider);
+router.delete('/provider/:id', deleteProvider); 
 
 
 //------------------------------------------------------//
@@ -68,36 +69,44 @@ router.delete('/provider/:id', deleteProvider);
 router.post('/employe', newEmploye);
 
 //update employe
-router.put('/employe:/id', updateEmploye);
+router.put('/employe/:id', updateEmploye); //!Error
 
 //get employe id
-// router.get('employe/:id', );    
+router.get('/employe/:id', idEmploye );  
 
-//get employe
+//get employe list
+router.get('/employe', listEmploye );
 
 //delete employe
+router.delete('/employe/:id', deleteEmploye);
 
 
 //!Apis inventario (Cliente)
 //new client
+router.post('/client', newClient);
 
 //view client
+router.get("/client", listClient);
 
 //view client id
+router.get("/client/:id", idClient);
 
 //update client
+router.put('/client/:id', updateClient);
 
 //delete client
+router.delete('/client/:id', deleteClient);
 
 //!Apis inventario Admin
 //new Admin
 
 //update Admin
 
-//view Admin
+//view Admin    
 
 //view Admin id
 
 //delete Admin
+
 
 module.exports = router;

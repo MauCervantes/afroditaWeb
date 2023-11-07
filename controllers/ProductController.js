@@ -25,7 +25,7 @@ const idProduct = async (req,res)=>{
 };
 
 const newProduct = async (req,res)=>{
-    const { id_provider, name, price, description, uses, types, existence } = req.body;
+    const { id_product, name, price, description, uses, types, existence } = req.body;
     prod = {};
     try{
         await pool.getConnection();
@@ -46,7 +46,7 @@ const newProduct = async (req,res)=>{
 
 const updateProduct = async (req,res)=>{
     const id = req.params.id;
-    const {id_provider, name, price, description, uses, types, existence } = req.body;
+    const {id_product, name, price, description, uses, types, existence } = req.body;
     try{
         await pool.getConnection();
         await pool.query('UPDATE product SET id_provider = ?, name = ?, price = ?, description = ?, uses = ?, types = ?, existence = ? WHERE id_product = ?',
@@ -104,6 +104,5 @@ module.exports = {
     newProduct,
     updateProduct,
     deleteProduct,
-    existence,
     existence
 };

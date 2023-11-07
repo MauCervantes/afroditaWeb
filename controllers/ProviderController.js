@@ -42,10 +42,10 @@ const idProvider = async (req,res)=>{
 
 const updateProvider = async (req, res)=>{
     const id = req.params.id;
-    prov = {};
+    const {name, enterprise, contact} = req.body;
     try{
-    await pool.getConnection();
-    await pool.query('UPDATE provider SET name = ?, enterprise = ?, contact = ? WHERE id_provider = ?',
+        await pool.getConnection();
+        prov = await pool.query('UPDATE provider SET name = ?, enterprise = ?, contact = ? WHERE id_provider = ?',
         [
             name, 
             enterprise,
@@ -62,7 +62,7 @@ const deleteProvider = async (req, res) =>{
     const id = req.params.id;
     try{
         await pool.getConnection();
-        await pool.query('DELETE FROM provider WHERE id_product = ?',
+        await pool.query('DELETE FROM provider WHERE id_provider = ?',
         [
             id
         ]);
