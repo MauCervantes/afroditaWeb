@@ -7,9 +7,9 @@ const newProvider = async (req, res) => {
         await pool.getConnection();
         prov = await pool.query('INSERT INTO provider VALUES (null, ?, ?, ?) RETURNING *', 
         [
-            nombre, 
-            empresa,
-            contacto
+            name, 
+            enterprise,
+            contact
         ]
         );
         res.json(prov);

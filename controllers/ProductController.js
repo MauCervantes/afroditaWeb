@@ -30,13 +30,13 @@ const newProduct = async (req,res)=>{
     try{
         await pool.getConnection();
         prod = await pool.query('INSERT INTO producto VALUES (null, ?, ?, ?, ?, ?, ?, ?) RETURNING *', [
-            id_proveedor, 
-            nombre, 
-            precio, 
-            descripcion, 
-            uso, 
-            tipo, 
-            existencia]
+            id_provider, 
+            name, 
+            price, 
+            description, 
+            uses, 
+            types, 
+            existence]
         );
         res.json(prod);
     }catch(error){
