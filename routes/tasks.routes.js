@@ -1,9 +1,9 @@
 const { Router } = require('express');
+const router = Router();
 const { km, kmp } = require('../controllers/dataset');
 const { listProduct, idProduct, newProduct, updateProduct, deleteProduct, existencia } = require('../controllers/ProductController'); 
-const { newProvider, listProvider } = require('../controllers/ProviderController'); 
-
-const router = Router();
+const { newProvider, listProvider, idProvider, updateProvider, deleteProvider } = require('../controllers/ProviderController'); 
+const { updateEmploye, newEmploye } = require('../controllers/EmployeController'); 
 
 //*Esta no debe de existir. Solo es para pruebas
 const { pool } = require('../db/db');
@@ -52,20 +52,26 @@ router.post('/provider', newProvider);
 router.get('/provider', listProvider);
 
 //get provider id
+router.get('/provider/:id', idProvider);
 
 //update provider
+router.put('/provider/:id', updateProvider);
 
 //delete provider
+router.delete('/provider/:id', deleteProvider);
 
 
 //------------------------------------------------------//
 //!Apis Inventario (Empleado)
 
 //new employe
+router.post('/employe', newEmploye);
 
 //update employe
+router.put('/employe:/id', updateEmploye);
 
 //get employe id
+// router.get('employe/:id', );    
 
 //get employe
 

@@ -28,8 +28,56 @@ const listProvider = async (req,res)=>{
         res.send(error);
     }
 };
+const idProvider = async (req,res)=>{
+    const id = req.params.id;
+    prov = {};
+    try{
+        await pool.getConnection();
+        prov = await pool.query('SELECT * from provider where id_provider = ' + id);
+        res.json(prov);
+    }catch(error){
+        res.send(error);
+    }
+};
+
+const updateProvider = async (req, res)=>{
+    const id = req.params.id;
+    prov = {};
+    try{
+    await pool.getConnection();
+    await pool.query('UPDATE provider SET name = ?, enterprise = ?, contact = ? WHERE id_provider = ?',
+        [
+            name, 
+            enterprise,
+            contact,
+            id
+        ]);
+        res.json(true);
+    }catch(error){
+        res.send(error);
+    }
+};
+
+const deleteProvider = async (req, res) =>{
+    const id = req.params.id;
+    try{
+        await pool.getConnection();
+        await pool.query('DELETE FROM provider WHERE id_product = ?',
+        [
+            id
+        ]);
+        res.json(true);
+    }catch(error){
+        res.send(error);
+    }
+};
+
+
 
 module.exports = {
     newProvider,
-    listProvider
+    listProvider,
+    idProvider,
+    updateProvider,
+    deleteProvider
 };

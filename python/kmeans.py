@@ -29,8 +29,8 @@ cen =[]
 #ciclo va guardando los id de productos
 consultas(query1)
 for row in curs:
-   ids.append("{id_producto}".format(**row))
-   name.append("{nombre}".format(**row))
+   ids.append("{id_product}".format(**row))
+   name.append("{name}".format(**row))
 
 #Ciclo, va guardando las veces que ubo compra del producto X
 #si tipo es compra
@@ -47,7 +47,7 @@ if(tipo == 'precio'):
    for product in ids:
       consultas(str(query3 + product))
       for row in curs:
-         x.append(float("{precio}".format(**row)))
+         x.append(float("{price}".format(**row)))
       
       
 #Ciclo que nos va guardando la cantidad de producto vendido
