@@ -54,10 +54,10 @@ if(tipo == 'precio'):
 for product in ids:
    consultas(str(query2 + product))
    for row in curs:
-      if("{sum(cantidad)}".format(**row) == 'None'):
+      if("{sum(quantity)}".format(**row) == 'None'):
          y.append(0)
       else:
-         y.append(int("{sum(cantidad)}".format(**row)))
+         y.append(int("{sum(quantity)}".format(**row)))
 
 #Asignamos a una tabla pandas los valores correspondientes
 df = np.column_stack([x, y])
