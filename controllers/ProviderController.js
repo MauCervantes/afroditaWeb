@@ -10,12 +10,11 @@ const newProvider = async (req, res) => {
             nombre, 
             empresa,
             contacto
-        ]
-        );
+        ]);
         res.json(prov);
     }catch(error){
         res.send(error);
-    };
+    }
 };
 
 const listProvider = async (req,res)=>{
@@ -26,7 +25,7 @@ const listProvider = async (req,res)=>{
         res.json(prov);
     }catch(error){
         res.send(error);
-    };
+    }
 };
 
 module.exports = {

@@ -29,19 +29,20 @@ const newProduct = async (req,res)=>{
     prod = {};
     try{
         await pool.getConnection();
-        prod = await pool.query('INSERT INTO producto VALUES (null, ?, ?, ?, ?, ?, ?, ?) RETURNING *', [
+        prod = await pool.query('INSERT INTO producto VALUES (null, ?, ?, ?, ?, ?, ?, ?) RETURNING *', 
+        [
             id_proveedor, 
             nombre, 
             precio, 
             descripcion, 
             uso, 
             tipo, 
-            existencia]
-        );
+            existencia
+        ]);
         res.json(prod);
     }catch(error){
         res.send(error);
-    };
+    }
 };
 
 const updateProduct = async (req,res)=>{
@@ -59,12 +60,11 @@ const updateProduct = async (req,res)=>{
             tipo, 
             existencia,
             id
-        ]
-        );
+        ]);
         res.json(true);
     }catch(error){
         res.send(error);
-    };
+    }
 };
 
 const deleteProduct = async(req,res)=>{
@@ -79,7 +79,7 @@ const deleteProduct = async(req,res)=>{
         res.json(true);
     }catch(error){
         res.send(error);
-    };
+    }
 };
 
 const existencia = async (req, res) => {
@@ -91,12 +91,11 @@ const existencia = async (req, res) => {
         [
             existencia,
             id
-        ]
-        );
+        ]);
         res.json(true);
     }catch(error){
         res.send(error);
-    };
+    }
 };
 
 

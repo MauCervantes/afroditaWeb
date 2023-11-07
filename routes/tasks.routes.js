@@ -4,14 +4,17 @@ const { km, kmp } = require('../controllers/dataset');
 const { listProduct, idProduct, newProduct, updateProduct, deleteProduct, existencia } = require('../controllers/ProductController'); 
 const { newProvider, listProvider } = require('../controllers/ProviderController'); 
 
-
+//*Esta no debe de existir. Solo es para pruebas
 const { pool } = require('../db/db');
 
-//APIS K-Means
+//?APIS K-Means
+//?EndPoint se utilizan para el K-MEANS y Series de tiempo
+//?Solo se podrán usar por el admin
 router.get('/dataset/:id', km);
 router.get('/datasetp/:id', kmp);
 
-//Apis Inventario (Producto)
+
+//!Apis Inventario (Producto)
 //GET para traer la lista de los productos
 //http://localhost:3000/product
 router.get('/product', listProduct);
@@ -38,31 +41,56 @@ router.put('/productExis/:id', existencia);
 
 
 //------------------------------------------------------//
-//Apis Inventario (Proveedor)
-
+//!Apis Inventario (Proveedor)
 //new Provider
 //http://localhost:3000/provider
 router.post('/provider', newProvider);
 
-//update provider
-
 //get provider list
+//http://localhost:3000/provider
 router.get('/provider', listProvider);
 
 //get provider id
+
+//update provider
 
 //delete provider
 
 
 //------------------------------------------------------//
-//Apis Inventario (Empleado)
+//!Apis Inventario (Empleado)
 
-//new empleado
+//new employe
 
-//update empleado
+//update employe
 
-//get empleado id
+//get employe id
 
-//delete empleado
+//get employe
+
+//delete employe
+
+
+//!Apis inventario (Cliente)
+//new client
+
+//view client
+
+//view client id
+
+//update client
+
+//delete client
+
+//!Apis inventario Admin
+//new Admin
+
+//update Admin
+
+//view Admin
+
+//view Admin id
+
+//delete Admin
 
 module.exports = router;
