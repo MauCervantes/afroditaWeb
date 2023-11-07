@@ -2,5 +2,5 @@
 u='root'
 p='19240369'
 h='localhost'
-db='afroditadb'
+db='afrodita'
 po='3307'

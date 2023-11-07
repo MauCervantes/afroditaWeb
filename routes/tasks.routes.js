@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const router = Router();
 const { km, kmp } = require('../controllers/dataset');
 const { listProduct, idProduct, newProduct, updateProduct, deleteProduct, existencia } = require('../controllers/ProductController'); 
 const { newProvider, listProvider } = require('../controllers/ProviderController'); 
-<<<<<<< HEAD
+
+const router = Router();
 
 //*Esta no debe de existir. Solo es para pruebas
 const { pool } = require('../db/db');
@@ -11,14 +11,6 @@ const { pool } = require('../db/db');
 //?APIS K-Means
 //?EndPoint se utilizan para el K-MEANS y Series de tiempo
 //?Solo se podrán usar por el admin
-=======
-//Holiiiis
-//Holiwiiis
-
-const { pool } = require('../db/db');
-//Hola
-//APIS K-Means
->>>>>>> ed6cf98e5651b089c74b5944a558e102dc3f6736
 router.get('/dataset/:id', km);
 router.get('/datasetp/:id', kmp);
 

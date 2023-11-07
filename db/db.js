@@ -4,7 +4,7 @@ const pool = mariadb.createPool({
     host: 'localhost',
     user: 'root',
     password: '19240369',
-    database: 'afroditadb',
+    database: 'afrodita',
     port: 3307
 });
 
