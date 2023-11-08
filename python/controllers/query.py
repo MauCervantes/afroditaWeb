@@ -10,6 +10,6 @@ def consultas (query = ""):
 #Consulta especifica al proyecto
 
 def grupBy(idp):
-    query = "select id_compra from venta where id_producto = " + idp + " group by id_compra"
+    query = "select id_purchase from sales where id_product = " + idp + " group by id_purchase"
     curs.execute(query)
 

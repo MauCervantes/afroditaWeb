@@ -180,12 +180,12 @@ fetch('http://localhost:3000/product').then(x => x.json()).then(content => gProd
 setTimeout(() => {
   for(i=0; i<gProduct.length; i++){
     for(j=0; j<dataset.length; j++){
-      if(gProduct[i].nombre == dataset[j].title){
+      if(gProduct[i].name == dataset[j].title){
         htmlInsert = '<div class="insertInto" id="insertInto' + i + '" onmouseenter="ingresarMouse(event, ' + i +', ' + j +')" onmouseleave="salirMouse(event, ' + i + ', ' + j +')"> ' 
-                        + '<strong>Nombre: </strong>' + gProduct[i].nombre + '<br>' 
-                        + '<strong>Tipo: </strong>' + gProduct[i].tipo + '<br>'
-                        + '<strong>Precio: $ </strong>' + gProduct[i].precio + '<br>'
-                        + '<strong>Existencia: </strong>' + gProduct[i].existencia + '<br>'
+                        + '<strong>Nombre: </strong>' + gProduct[i].name + '<br>' 
+                        + '<strong>Tipo: </strong>' + gProduct[i].types + '<br>'
+                        + '<strong>Precio: $ </strong>' + gProduct[i].price + '<br>'
+                        + '<strong>Existencia: </strong>' + gProduct[i].existence + '<br>'
                       '</div>';
         list.insertAdjacentHTML("beforeend", htmlInsert);
         htmlInsert = '';

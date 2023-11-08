@@ -17,6 +17,10 @@ input = ast.literal_eval(sys.argv[1])
 output = input
 cur = output['data_sent']
 tipo = output['tipo']
+'''
+cur = 3
+tipo = "compra"
+'''
 
 #Variables globales
 num = 0
@@ -115,7 +119,11 @@ output['centroids'] = cen
 print(json.dumps(output))
 sys.stdout.flush()
 
-#Pruebas 
-'''plt.show()
-print(fd)'''
+
+#Pruebas
+'''
+plt.show()
+print(fd)
+''' 
+
 
