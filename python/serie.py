@@ -1,7 +1,7 @@
 # Manipulación y tratamiento de Datos
 import numpy as np
 import pandas as pd
-
+from pmdarima import auto_arima
 
 #importar consulta
 from controllers.query import consultas, curs
@@ -53,18 +53,20 @@ df[1] = pd.to_numeric(df[1])
 df = df.set_index(0)
 #print(df.head())
 
-fig = px.line(df, x=df.index, y=1,template = "plotly_dark",
-              title="Ganancias por mes")
-fig.show()
+#fig = px.line(df, x=df.index, y=1,template = "plotly_dark",
+#              title="Ganancias por mes")
+#fig.show()
 
+#[p, d, q]
+#[0, 0, 0]
 #Prueba Dickey_Fuller
 def Prueba_Dickey_Fuller(series , column_name):
-    print (f'Resultados de la prueba de Dickey-Fuller para columna: {column_name}')
+    #print (f'Resultados de la prueba de Dickey-Fuller para columna: {column_name}')
     dftest = adfuller(series, autolag='AIC')
     dfoutput = pd.Series(dftest[0:4], index=['Test Statistic','p-value','No Lags Used','Número de observaciones utilizadas'])
     for key,value in dftest[4].items():
        dfoutput['Critical Value (%s)'%key] = value
-    print (dfoutput)
+    #print (dfoutput)
     return dftest[1]
     '''if dftest[1] <= 0.05:
         print("Conclusion:====>")
@@ -78,7 +80,7 @@ def Prueba_Dickey_Fuller(series , column_name):
 ##Mandamos a llamar el metodo de dickey_fuller
 diferencia = 0 
 pvalue = Prueba_Dickey_Fuller(df[1],"1")
-print(pvalue)
+#print(pvalue)
 while(pvalue > 0.05):
     
     df1=df.copy()
@@ -91,3 +93,51 @@ while(pvalue > 0.05):
     pvalue = Prueba_Dickey_Fuller(df1["total_diff"],"total_diff")
     # Take a look at the head of the dataset
     #df1.head()
+
+'''
+plt.rcParams["figure.figsize"] = (12, 8) 
+a = seasonal_decompose(df1["total_diff"], model = "add")
+a.plot();
+'''
+
+#?Establecemos datos de entrenamiento y datos de pruebas
+porcen = int(len(df)*.42)
+train_data = df[:len(df)-porcen] #58%
+test_data = df[len(df)-porcen:] #42%
+test=test_data.copy()
+
+print(train_data.shape, test_data.shape)
+
+#print(test_data)
+
+modelo_auto=auto_arima(train_data,start_p=0,d=1,start_q=0,
+          max_p=4,max_d=2,max_q=4, start_P=0,
+          D=1, start_Q=0, max_P=2,max_D=1,
+          max_Q=2, m=12, seasonal=True,
+          error_action='warn',trace=True,
+          supress_warnings=True,stepwise=True,
+          random_state=20,n_fits=50)
+#print(modelo_auto)
+
+#0 dates y 1 total
+#ARIMA(0,1,1)(1,1,0)[12]
+arima_model = SARIMAX(train_data[1], order = (modelo_auto.order[0],modelo_auto.order[1],modelo_auto.order[2]), seasonal_order = (modelo_auto.seasonal_order[0],modelo_auto.seasonal_order[1],modelo_auto.seasonal_order[2],modelo_auto.seasonal_order[3]))
+arima_result = arima_model.fit()
+#arima_result.summary()
+
+arima_pred = arima_result.predict(start = len(train_data), end = len(df)-1, typ="levels").rename("ARIMA Predictions")
+#print(arima_pred)
+
+arima_pred2 = arima_result.predict(start='2020-12-01',end='2023-05-01', typ="levels").rename("ARIMA Predictions 2")
+#print(arima_pred2)
+
+plt.style.use('seaborn-v0_8')
+plt.rcParams["figure.figsize"] = (10, 4)
+
+plt.plot(test_data[1],color="blue" ,label="Original")
+plt.plot(arima_pred2, color="lime", label="Predicciones")
+plt.title("Predicción con Modelo Arima", fontsize=20);
+plt.xlabel('Meses')
+plt.ylabel('')
+plt.legend( fontsize=10);
+plt.show();
