@@ -5,6 +5,7 @@ const { listProduct, idProduct, newProduct, updateProduct, deleteProduct, existe
 const { newProvider, listProvider, idProvider, updateProvider, deleteProvider } = require('../controllers/ProviderController'); 
 const { newEmploye, updateEmploye, listEmploye, idEmploye, deleteEmploye } = require('../controllers/EmployeController'); 
 const { newClient, listClient, idClient, deleteClient, updateClient} = require('../controllers/ClientController'); 
+const { arima } = require('../controllers/SeriesController');
 
 //*Esta no debe de existir. Solo es para pruebas
 const { pool } = require('../db/db');
@@ -14,6 +15,7 @@ const { pool } = require('../db/db');
 //?Solo se podrán usar por el admin
 router.get('/dataset/:id', km);
 router.get('/datasetp/:id', kmp);
+router.get('/serie', arima);
 
 
 //!Apis Inventario (Producto)
@@ -69,13 +71,13 @@ router.delete('/provider/:id', deleteProvider);
 router.post('/employe', newEmploye);
 
 //update employe
-router.put('/employe/:id', updateEmploye); //!Error
+router.put('/employe/:id', updateEmploye);
 
 //get employe id
 router.get('/employe/:id', idEmploye );  
 
 //get employe list
-router.get('/employe', listEmploye );
+router.get('/employe', listEmploye ); //?Cambiar para solo "Empleados"
 
 //delete employe
 router.delete('/employe/:id', deleteEmploye);
@@ -83,7 +85,7 @@ router.delete('/employe/:id', deleteEmploye);
 
 //!Apis inventario (Cliente)
 //new client
-router.post('/client', newClient);
+router.post('/client', newClient); 
 
 //view client
 router.get("/client", listClient);
@@ -98,15 +100,8 @@ router.put('/client/:id', updateClient);
 router.delete('/client/:id', deleteClient);
 
 //!Apis inventario Admin
-//new Admin
-
-//update Admin
-
-//view Admin    
-
-//view Admin id
-
-//delete Admin
+//?campo rol 2 {Empleado Administrador}
+//view Admins
 
 
 module.exports = router;
