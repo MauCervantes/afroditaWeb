@@ -3,17 +3,17 @@ import numpy as np
 import pandas as pd
 from pmdarima import auto_arima
 
-#importar consulta
+#importar consulta BD
 from controllers.query import consultas, curs
 from utils.cq import query4
 
-# Visualización de datos
+# Visualización de datos Graficos
 import plotly.express as px
 import matplotlib.pyplot as plt
 #matplotlib inline
 plt.style.use('ggplot')
 
-# Modelación Arima
+# Modelación Arima SARIMAX
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.graphics.tsaplots import plot_acf,plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -30,7 +30,7 @@ from sklearn import metrics
 import warnings
 warnings.filterwarnings("ignore")
 
-#
+# Dataset
 import sys
 import json
 import ast
@@ -39,14 +39,14 @@ import ast
 date = []
 total = []
 pvalue = 0
+years = []
+month = []
+day = []
 
 
-input = ast.literal_eval(sys.argv[1])
+'''input = ast.literal_eval(sys.argv[1])
 output = input
-message = output['data_sent']
-
-#Input
-
+message = output['data_sent']'''
 
 #consultas
 consultas(query4)
@@ -115,8 +115,6 @@ while(pvalue > 0.05):
     pvalue = Prueba_Dickey_Fuller(df1[nameColumn],nameColumn)
     # Take a look at the head of the dataset
     #df1.head()
-#print(pvalue)
-#print(nameColumn)
 
 '''
 plt.rcParams["figure.figsize"] = (12, 8) 
@@ -154,14 +152,7 @@ arima_pred = arima_result.predict(start = len(train_data), end = len(df)-1, typ=
 
 arima_pred2 = arima_result.predict(start='2022-12-01',end='2023-6-01', typ="levels").rename("ARIMA Predictions 2")
 
-
-#print(arima_pred2.index)
-
-#a ver si me imprime el index las fechas que tenemos en la prediccion
-#!ESTOY ODIANDO ESTA MAMADA en minusculas 
-#jajaja
-#Vamos a ver si nos imprime fecha por fecha Lo haré en la linea 186# va, voy para allá
-
+'''
 plt.style.use('seaborn-v0_8')
 plt.rcParams["figure.figsize"] = (10, 4)
 
@@ -173,6 +164,8 @@ plt.ylabel('')
 plt.legend( fontsize=10);
 plt.show();
 
+'''
+
 #dateOutput = test_data[0] + arima_pred2[0]
 #totalOutput = test_data[1] + arima_pred2[1]
 #table = test_data.len[origin] + arima_pred2.len[Predict]
@@ -181,40 +174,27 @@ dateOutput = []
 
 for date in nuevo['date']:
     fecha = str(date).split(" ")
-    dateOutput.append(fecha[0])
+    y = fecha[0].split("-")
+    years.append(y[0])
+    month.append(y[1])
+    day.append(y[2])
 
 #print(dateOutput)
 
-#En este for lo que nos tiene que hacer e s lo miso que arriba
-#separar por el split(" ") para que solo nos arroje la fecha sin la hora, va
-#Va es que la ely esta muy callada ;(, creo otra variable como la de dateOutput ?
-#Quien se lo hecha?, a ver yo 
-#Awebo ya esta, a ver calalo jajajja avavavava a webo si jala dejen les paso una terminal compartida
-#Esta en el liveSHare es el powershell de read/write
 for date in arima_pred2.index:
     predFecha = str(date).split(" ")
-    dateOutput.append(predFecha[0])
+    y = fecha[0].split("-")
+    years.append(y[0])
+    month.append(y[1])
+    day.append(y[2])
+
 #print(dateOutput)
 
-#Al chile si odio esta cosa. Ya va jalando jajaja chale es que no veo jajaja,
-#  deja ver en la llamada que te salió, ya vi jajaja
 totalOutput = []
 
 for totalP in nuevo['total']:
     totalOutput.append(totalP)
 
-
-#Ahora hay que ver como ir guardando los datos de prediccion
-#Para eso voy a ver que datos me imprime con el siguiente for
-#No se donde se encuentran pero espero puedan ver esto jajajaja ya lo vi jaajjaja chi :3
-#Si nos esta imrpimiendo los datos de total 
-#entonces si vamos a tener que gusrdar como tal el total que nos genera en el 
-#for jajajaj creo que me revolvi al explicar esto o sea que es guardar el totalOutput de este for?
-#zi con z jajajaja Vamos a copiar como tal la linea 204 y pegarla en la 215, va deja la copio
-#vamos a probar con la rimpresion de la linea 217
-#ah jajaj no guarde antes de correrlo XD es lo que te iba a decir jajaja PTM march. 
-#Tambien hay una P de mas Esa jajaja jejeje
-#Listones ya jalo :) :) (°_°)
 for total in arima_pred2:
     totalOutput.append(total)
 
@@ -226,16 +206,12 @@ for table in nuevo['total']:
 for table in arima_pred2:
     tableOutput.append('predict')
 
+print(day)
 
-#Ahora viene lo bueno. Probar la api jajajaj chalesota jajaajaj jajajaj solo que vamos a cambiar un poco 
-#La api. vamos hora al documento seriesController en la carpeta controller va va
-output['date'] = dateOutput
+'''output['year'] = years
+output['month'] = month
+output['day'] = day
 output['total'] = totalOutput
 output['table'] = tableOutput
 print(json.dumps(output))
-sys.stdout.flush()
-
-
-
-#test[date][total]
-#arima[date][total]
+sys.stdout.flush()'''

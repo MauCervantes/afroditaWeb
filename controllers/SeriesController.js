@@ -17,7 +17,9 @@ function createDataset(){
             //test[date][total][table]
             //predict[date][total][table]
             datos.push({ 
-                "date": prueba['date'][i], //90
+                "year": prueba['year'][i],
+                "month": prueba['month'][i],
+                "day": prueba['day'][i],
                 "total": prueba['total'][i],
                 "table": prueba['table'][i]
             });
@@ -37,7 +39,9 @@ const arima = (req, res) => {
 
         data_to_pass_in = {
             data_sent: 'Requerimientos para series de tiempo',
-            date: undefined,
+            year: undefined,
+            month: undefined,
+            day: undefined,
             total: undefined,
             table: undefined
         };
