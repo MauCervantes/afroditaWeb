@@ -1,9 +1,24 @@
 const div = document.getElementById('chartdiv');
+var origin = [];
+var predict = [];
 
-const data = () => {
+//!fetch GET response
+fetch('http://localhost:3000/serie')
+        .then(response => response.json())
+        .then(response => dataSets(response));
 
+
+const dataSets = (response) => {
+  for(i = 0; i<response.length; i++){
+    if (response[i].table == "origin"){  origin.push(response[i]);  }
+    else{  predict.push(response[i])  }
+  }
+  console.log(predict);
+  data(origin, predict);
+};
+
+const data = (origin, predict) => {
     am5.ready(function() {
-
         // Create root element
         // https://www.amcharts.com/docs/v5/getting-started/#Root_element 
         var root = am5.Root.new("chartdiv");
@@ -31,26 +46,29 @@ const data = () => {
         var date = new Date();
         date.setHours(0, 0, 0, 0);
         var value = 100;
-        
-        function generateData() {
-          value = Math.round((Math.random() * 10 - 4.2) + value);
+
+        //Create series with datasets
+        function generateData(dic) {
+          //value = Math.round((Math.random() * 10 - 4.2) + value);
+          value = parseInt(dic.total);
+          console.log(dic);
+          
           //am5.time.add(date, "month", 5,2010);
-          date = new Date(2010,5,1);
-          console.log(date.getTime());
+          date = new Date(parseInt(dic.year),parseInt(dic.month) - 1,parseInt(dic.day));
+          //console.log(date.getTime());
           return {
             date: date.getTime(),
             value: value
           };
         }
         
-        function generateDatas(count) {
-          var data = [];
-          for (var i = 0; i < count; ++i) {
-            data.push(generateData());
+        function generateDatas(array) {
+          var generate = [];
+          for (i = 0; i < array.length; ++i) {
+            generate.push(generateData(array[i]));
           }
-          return data;
+          return generate;
         }
-        
         
         // Create axes
         // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
@@ -71,32 +89,70 @@ const data = () => {
         
         // Add series
         // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        for (var i = 0; i < 10; i++) {
-          var series = chart.series.push(am5xy.LineSeries.new(root, {
-            name: "Series " + i,
-            xAxis: xAxis,
-            yAxis: yAxis,
-            valueYField: "value",
-            valueXField: "date",
-            legendValueText: "{valueY}",
-            tooltip: am5.Tooltip.new(root, {
-              pointerOrientation: "horizontal",
-              labelText: "{valueY}"
-            })
-          }));
+        /*for (var i = 0; i < 2; ++i) {
+          if(i == 0){  nameSerie = "Original"  }
+          else{  nameSerie = "Predicción"  }
+          */
+        var data;
+        var seriesOrigin = chart.series.push(am5xy.LineSeries.new(root, {
+          name: "Original",
+          xAxis: xAxis,
+          yAxis: yAxis,
+          valueYField: "value",
+          valueXField: "date",
+          legendValueText: "{valueY}",
+          tooltip: am5.Tooltip.new(root, {
+            pointerOrientation: "horizontal",
+            labelText: "{valueY}"
+          }),
+          fill: am5.color(0x227C9D),
+          stroke: am5.color(0x227C9D)
+        }));
         
-          date = new Date();
-          date.setHours(0, 0, 0, 0);
-          value = 0;
+        seriesOrigin.strokes.template.setAll({
+          strokeWidth: 3
+        });
+
+        date = new Date();
+        value = 0;
         
-          var data = generateDatas(100);
-          series.data.setAll(data);
+        data = generateDatas(origin);
+        seriesOrigin.data.setAll(data);
         
-          // Make stuff animate on load
-          // https://www.amcharts.com/docs/v5/concepts/animations/
-          series.appear();
-        }
         
+        // Make stuff animate on load
+        // https://www.amcharts.com/docs/v5/concepts/animations/
+        seriesOrigin.appear();
+        
+        
+        var seriesPredict = chart.series.push(am5xy.LineSeries.new(root, {
+          name: "Prediccion",
+          xAxis: xAxis,
+          yAxis: yAxis,
+          valueYField: "value",
+          valueXField: "date",
+          legendValueText: "{valueY}",
+          tooltip: am5.Tooltip.new(root, {
+            pointerOrientation: "horizontal",
+            labelText: "{valueY}"
+          }),
+          fill: am5.color(0xFE6D73),
+          stroke: am5.color(0xFE6D73)
+        }));
+        
+        seriesPredict.strokes.template.setAll({
+          strokeWidth: 3
+        });
+
+        date = new Date();
+        value = 0;
+        
+        data = generateDatas(predict);
+        seriesPredict.data.setAll(data);
+        
+        // Make stuff animate on load
+        // https://www.amcharts.com/docs/v5/concepts/animations/
+        seriesPredict.appear();
         
         // Add cursor
         // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/

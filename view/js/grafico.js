@@ -178,17 +178,6 @@ function createam5(){
 //Get //Delete
 fetch('http://localhost:3000/product').then(x => x.json()).then(content => gProduct = content);
 
-
-//Post Put
-/*const Params = {
-  "name": nameAuthor.value
-}
-
-fetch(URL, {
-  method: "POST",
-  body: JSON.stringify(Params)
-})*/
-
 //Dura un tiempo de 5 seg para que haga la consulta fetch y va generando el listado en el div
 setTimeout(() => {
   for(i=0; i<gProduct.length; i++){

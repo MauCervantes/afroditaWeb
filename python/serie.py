@@ -36,6 +36,7 @@ import json
 import ast
 
 #Variables globales
+
 date = []
 total = []
 pvalue = 0
@@ -44,9 +45,13 @@ month = []
 day = []
 
 
-'''input = ast.literal_eval(sys.argv[1])
+
+
+input = ast.literal_eval(sys.argv[1])
 output = input
-message = output['data_sent']'''
+message = output['data_sent']
+
+
 
 #consultas
 consultas(query4)
@@ -183,7 +188,7 @@ for date in nuevo['date']:
 
 for date in arima_pred2.index:
     predFecha = str(date).split(" ")
-    y = fecha[0].split("-")
+    y = predFecha[0].split("-")
     years.append(y[0])
     month.append(y[1])
     day.append(y[2])
@@ -206,12 +211,15 @@ for table in nuevo['total']:
 for table in arima_pred2:
     tableOutput.append('predict')
 
-print(day)
+#print(month)
 
-'''output['year'] = years
+
+output['year'] = years
 output['month'] = month
 output['day'] = day
 output['total'] = totalOutput
 output['table'] = tableOutput
 print(json.dumps(output))
-sys.stdout.flush()'''
+sys.stdout.flush()
+
+

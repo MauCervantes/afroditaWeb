@@ -12,6 +12,7 @@ function callpython(){
 //Creacion del dataset
 function createDataset(){
     try{
+        datos = [];
         for(var i= 0; i < prueba['table'].length; i++) {
         
             //test[date][total][table]
@@ -51,7 +52,7 @@ const arima = (req, res) => {
         setTimeout(() =>{
             createDataset();
             res.json(datos);
-        }, 20000);
+        }, 15000);
 
     }catch (error){
         console.log(error.message);
